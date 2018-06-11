@@ -2,8 +2,9 @@ import socket
 # from scapy.all import *
 import binascii
 import time
+import matplotlib.pyplot as plt
 
-TCP_IP = '132.72.23.23'
+TCP_IP = '192.168.0.102' #'132.72.23.23'
 TCP_PORT = 22
 BUFFER_SIZE = 1024
 
@@ -19,40 +20,84 @@ BUFFER_SIZE = 1024
 message6 = '5353482d322e302d4f70656e5353485f372e360d0a'
 message9 = '0000054c0514c848e47a5adbfb8b5a5cfbd5a0d84e0600000130637572766532353531392d7368613235362c637572766532353531392d736861323536406c69627373682e6f72672c656364682d736861322d6e697374703235362c656364682d736861322d6e697374703338342c656364682d736861322d6e697374703532312c6469666669652d68656c6c6d616e2d67726f75702d65786368616e67652d7368613235362c6469666669652d68656c6c6d616e2d67726f757031362d7368613531322c6469666669652d68656c6c6d616e2d67726f757031382d7368613531322c6469666669652d68656c6c6d616e2d67726f75702d65786368616e67652d736861312c6469666669652d68656c6c6d616e2d67726f757031342d7368613235362c6469666669652d68656c6c6d616e2d67726f757031342d736861312c6578742d696e666f2d63000001227373682d7273612d636572742d763031406f70656e7373682e636f6d2c7273612d736861322d3531322c7273612d736861322d3235362c7373682d7273612c65636473612d736861322d6e697374703235362d636572742d763031406f70656e7373682e636f6d2c65636473612d736861322d6e697374703338342d636572742d763031406f70656e7373682e636f6d2c65636473612d736861322d6e697374703532312d636572742d763031406f70656e7373682e636f6d2c7373682d656432353531392d636572742d763031406f70656e7373682e636f6d2c65636473612d736861322d6e697374703235362c65636473612d736861322d6e697374703338342c65636473612d736861322d6e697374703532312c7373682d656432353531390000006c63686163686132302d706f6c7931333035406f70656e7373682e636f6d2c6165733132382d6374722c6165733139322d6374722c6165733235362d6374722c6165733132382d67636d406f70656e7373682e636f6d2c6165733235362d67636d406f70656e7373682e636f6d0000006c63686163686132302d706f6c7931333035406f70656e7373682e636f6d2c6165733132382d6374722c6165733139322d6374722c6165733235362d6374722c6165733132382d67636d406f70656e7373682e636f6d2c6165733235362d67636d406f70656e7373682e636f6d000000d5756d61632d36342d65746d406f70656e7373682e636f6d2c756d61632d3132382d65746d406f70656e7373682e636f6d2c686d61632d736861322d3235362d65746d406f70656e7373682e636f6d2c686d61632d736861322d3531322d65746d406f70656e7373682e636f6d2c686d61632d736861312d65746d406f70656e7373682e636f6d2c756d61632d3634406f70656e7373682e636f6d2c756d61632d313238406f70656e7373682e636f6d2c686d61632d736861322d3235362c686d61632d736861322d3531322c686d61632d73686131000000d5756d61632d36342d65746d406f70656e7373682e636f6d2c756d61632d3132382d65746d406f70656e7373682e636f6d2c686d61632d736861322d3235362d65746d406f70656e7373682e636f6d2c686d61632d736861322d3531322d65746d406f70656e7373682e636f6d2c686d61632d736861312d65746d406f70656e7373682e636f6d2c756d61632d3634406f70656e7373682e636f6d2c756d61632d313238406f70656e7373682e636f6d2c686d61632d736861322d3235362c686d61632d736861322d3531322c686d61632d736861310000001a7a6c6962406f70656e7373682e636f6d2c7a6c69622c6e6f6e650000001a7a6c6962406f70656e7373682e636f6d2c7a6c69622c6e6f6e65000000000000000000000000000000000000'
 message13 = '0000001406220000080000000c0000002000000000000000'
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_address = (TCP_IP, TCP_PORT)
-sock.connect(server_address)
-server_message_1 = sock.recv(8192)
+message15 = '0000001406220000080000000c0000002000000000000000'
+message17 = '0000018c05200000018100a557e8f3e456be6a01727b590294b6e8d885448dec51a8688bc0354b0bfd39c3f1587b87fd1f27af9d5584b1df6069c3784f0f83cbd20c4a4f4bc1f1dc6406e655556e57685f53591aa86d7bb22b7721bf90b5c8fd2cc66652711dda6b93097dfb06993a5dd2f1707f594ae34c7406a0eceea08592316c9c19bb56d21a66fc1b2384ef3a3c941fe05ccbbb5e02740f7b84d0c41d06c527c3acce89919812bb63865239dc5191ab37b55989803c935853fc5ac141781b32b253c49ed7e50dd42e5f0f3d3e79f640d2575a051812f7672cea7bc984426129c77abfefd176c938b60f1d5a35bd7f652055b84253ec72ec2f55f39e8e95031ab4e0eabbfcca9d00afa92c1976dde2a476b642df2d783e79b84bd3d5b6817ccc709e7e42636c2be61a11584067d793987fd1df6eaeff310d54f4f190d1db4214e4f24eff8ab7368329d642ec977904b8ebe4274b8124be2eda9bc7b736b646fb9a820e34b46cbe6072733931d4ac7ddba6da67387ca68af866f510776b5318b9096f8bd995e185b3120000000000'
+
+for i in range(0, 100):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_address = (TCP_IP, TCP_PORT)
+    sock.connect(server_address)
+    server_message_1 = sock.recv(8192)
 
 
-client_message_1 = binascii.unhexlify(message6)
-start_6 = time.clock()
-sock.send(client_message_1)
-server_message_2 = sock.recv(8192)
-end_6 = time.clock()
+    client_message_1 = binascii.unhexlify(message6)
+    # start = time.clock()
+    sock.send(client_message_1)
+    server_message_2 = sock.recv(8192)
+    # end = time.clock()
 
-print("message6 : ")
-print("received data:", server_message_2)
-print("CPU time : ", end_6 - start_6)
+    # print("message6 : ")
+    # print("received data:", server_message_2)
+    # print("CPU time : ", end - start)
 
-# message 9
-client_message_9 = binascii.unhexlify(message9)
-start_9 = time.clock()
-sock.send(client_message_9)
-server_message_9 = sock.recv(8192)
-end_9 = time.clock()
+    # message 9
+    client_message_9 = binascii.unhexlify(message9)
+    # start = time.clock()
+    sock.send(client_message_9)
+    # server_message_9 = sock.recv(8192)
+    # end = time.clock()
 
-print("message9 : ")
-print("received data:", server_message_9)
-print("CPU time : ", end_9 - start_9)
+    # print("message9 : ")
+    # # print("received data:", server_message_9)
+    # print("CPU time : ", end - start)
 
-# message 13
-client_message_13 = binascii.unhexlify(message13)
-start_13 = time.clock()
-sock.send(client_message_13)
-server_message_13 = sock.recv(8192)
-end_13 = time.clock()
+    # message 13
+    client_message_13 = binascii.unhexlify(message13)
+    # start = time.clock()
+    sock.send(client_message_13)
+    server_message_13 = sock.recv(8192)
+    # end = time.clock()
 
-print("message13 : ")
-print("received data:", server_message_13)
-print("CPU time : ", end_13 - start_13)
+    # print("message13 : ")
+    # print("received data:", server_message_13)
+    # print("CPU time : ", end - start)
+
+
+    # message 15
+    # client_message_15 = binascii.unhexlify(message15)
+    # start = time.clock()
+    # sock.send(client_message_15)
+    # server_message_15 = sock.recv(8192)
+    # end = time.clock()
+    #
+    # print("message15 : ")
+    # print("received data:", server_message_15)
+    # print("CPU time : ", end - start)
+
+    # message 17
+    client_message_17 = binascii.unhexlify(message17)
+    start = time.clock()
+    sock.send(client_message_17)
+    server_message_17 = sock.recv(8192)
+    end = time.clock()
+
+    print("message17 : ")
+    print("received data:", server_message_17)
+    print("CPU time : ", end - start)
+
+
+def plot_results(title, svr_results, default_results, x_label, y_label):
+    plt.gca().set_color_cycle(['red', 'green'])
+    plt.title(title)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+
+    plt.plot(svr_results['x'], svr_results['y'])
+    plt.plot(default_results['x'], default_results['y'])
+
+    art = []
+    lgd = plt.legend(['SVR', 'Default'], bbox_to_anchor=(1.05, 1), loc=2)
+    art.append(lgd)
+
+    plt.savefig("./" + title + ".png", additional_artists=art, bbox_inches="tight")
+    plt.close()
